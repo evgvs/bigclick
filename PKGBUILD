@@ -1,3 +1,5 @@
+# Maintainer: evgvs <evgvs@t.me>
+
 pkgname=bigclick
 pkgver=46.0_bigclick
 pkgrel=1
