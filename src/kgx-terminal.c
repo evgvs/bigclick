@@ -550,16 +550,26 @@ pressed (GtkGestureClick *gesture,
          double           y,
          KgxTerminal     *self)
 {
-  GdkModifierType state;
-  guint button;
+  GdkModifierType state = gtk_event_controller_get_current_event_state (GTK_EVENT_CONTROLLER (gesture));
+  guint button = gtk_gesture_single_get_current_button (GTK_GESTURE_SINGLE (gesture));
+
+  if (button == GDK_BUTTON_SECONDARY)
+  {
+    if (vte_terminal_get_has_selection(VTE_TERMINAL(self)))
+    {
+      copy_activated(self);
+      vte_terminal_unselect_all(VTE_TERMINAL(self));
+    }
+    else
+    {
+      paste_activated(self);
+    }
+  }
 
   if (n_presses > 1) {
     gtk_gesture_set_state (GTK_GESTURE (gesture), GTK_EVENT_SEQUENCE_DENIED);
     return;
   }
-
-  state = gtk_event_controller_get_current_event_state (GTK_EVENT_CONTROLLER (gesture));
-  button = gtk_gesture_single_get_current_button (GTK_GESTURE_SINGLE (gesture));
 
   if (have_url_under_pointer (self, x, y) &&
       (button == GDK_BUTTON_PRIMARY || button == GDK_BUTTON_MIDDLE) &&

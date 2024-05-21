@@ -44,7 +44,8 @@
     <property name="enable-fallback-scrolling">False</property>
     <property name="has-tooltip">True</property>
     <property name="scroll-unit-is-pixels">True</property>
-    <property name="context-menu-model">context_model</property>
+    <!-- Remove that useless context model 
+      <property name="context-menu-model">context_model</property>-->
     <binding name="font-desc">
       <lookup name="font">
         <lookup name="settings">KgxTerminal</lookup>
